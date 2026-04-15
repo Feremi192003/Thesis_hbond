@@ -1,0 +1,6 @@
+parm ../02_EMIN/WT10.prmtop
+
+parmstrip :WAT
+parmstrip :Na+
+
+parmwrite out WT10R3_nowat.prmtop

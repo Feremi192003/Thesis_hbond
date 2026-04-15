@@ -1,0 +1,22 @@
+#20 ps heating with restraint on molecule
+&cntrl
+  imin=0,
+  irest=0,
+  ntx=1,
+  ntb=1,
+  cut=10,
+  ntr=1,
+  ntc=2,
+  ntf=2,
+  tempi=0.0,
+  temp0=300.0,
+  ntt=3,
+  gamma_ln=1.0,
+  nstlim=20000,
+  dt=0.001,
+  ntpr=2000,
+  ntwx=2000,
+  ntwr=20000,
+  restraint_wt=20.0,
+  restraintmask=':1-277',
+&end

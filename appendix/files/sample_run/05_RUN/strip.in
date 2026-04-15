@@ -1,0 +1,7 @@
+parm ../02_EMIN/WT10.prmtop
+trajin output/WT10_md1100.trj
+
+strip :WAT
+strip :Na+
+
+trajout output/WT10_md1100.nc

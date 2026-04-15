@@ -1,0 +1,5 @@
+parm ../../WT10_nowat.prmtop
+
+trajin ../../WT10.nc
+
+atomicfluct out wt10_RMSF.dat byres

@@ -1,0 +1,9 @@
+parm ../../WT10_nowat.prmtop
+
+trajin ../../WT10.nc 1 last
+
+rmsd first
+average crdset 1tup_AVG :1-277
+run
+
+rms ref 1tup_AVG :1-277 out wt10_avg_struct.dat
