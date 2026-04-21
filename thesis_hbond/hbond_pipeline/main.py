@@ -13,13 +13,13 @@ def build_parser() -> argparse.ArgumentParser:
     """Create the command-line argument parser for the package.
 
     Returns:
-        argparse.ArgumentParser: Parser configured with I/O, optional flags to contorl if you want plotting, residue metrics or parallelism
+        argparse.ArgumentParser: Parser configured with I/O, optional flags to control if you want plotting, residue metrics or parallelism
     """
     parser = argparse.ArgumentParser(
         description="Hydrogen-bond interaction analysis pipeline for p53 isoform CSV files."
     )
 
-    #This is needed bc it checks for input directory containing raw input files post CPPTRAJ
+    #This is needed since it checks for input directory containing raw input files post CPPTRAJ
     parser.add_argument(
         "input_dir",
         type=Path,
@@ -41,7 +41,7 @@ def build_parser() -> argparse.ArgumentParser:
         default=4,
         help="Number of worker processes for parallel analysis",
     )
-    #Allow for process based exe. across multiple files.
+    #Allow for process based execution across multiple files.
     parser.add_argument(
         "--parallel",
         action="store_true",

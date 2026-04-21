@@ -57,5 +57,5 @@ COLUMN_NAMES = [
     "avgdist",
     "avgang",
 ]
-#Recursiing to find CSV files.
+#Recursing to find CSV files.
 DEFAULT_PATTERN = "*_DNA_RES_INTERACT.csv"

@@ -54,7 +54,7 @@ def _process_single_csv(
 
 
 def _infer_chunksize(n_files: int, workers: int) -> int:
-    """Choose executor chunk size for paralle processing.
+    """Choose executor chunk size for parallel processing.
     """
     if workers <= 1:
         return 1
@@ -79,7 +79,7 @@ def run_pipeline(
         Input location for raw interaction CSV files and output location for all
         generated tables/plots.
     pattern:
-        Recursive glob used to discover CSV files.
+        Recursive used to discover CSV files.
     make_plots:
         Whether to generate plots in addition to CSV tables.
     workers:

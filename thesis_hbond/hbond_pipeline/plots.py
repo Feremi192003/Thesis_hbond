@@ -1,16 +1,6 @@
 from __future__ import annotations
 """Plotting for file-level and res level summaries.
     this turns tables into bar plots, heatmaps and residue charts.
-
-    Raises:
-        ValueError: _description_
-        ValueError: _description_
-        ValueError: _description_
-        ValueError: _description_
-        ValueError: _description_
-
-    Returns:
-        _type_: _description_
     """
 from pathlib import Path
 

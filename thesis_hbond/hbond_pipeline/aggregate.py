@@ -3,19 +3,19 @@ from __future__ import annotations
 """
 Helpers for averaging and reshaping pipeline outputs.
 
-This module takes fil-level, residue-level metric tables and conversts them into condition/isoform summaries used in other modules in the pipeline.
+This module takes file-level, residue-level metric tables and conversts them into condition/isoform summaries used in other modules in the pipeline.
 """
 
 import pandas as pd
 
 
 def aggregate_metrics(file_metrics_df: pd.DataFrame) -> pd.DataFrame:
-    """Average file-level metrics across replicates for each condition and isofomr pair.
+    """Average file-level metrics across replicates for each condition and isoform pair.
 
     Takes table containing one row per processed CSV file, may include Core metrics + residue-specific columns.
 
     Returns:
-        pd.DataFrame, a table iwth one row per condition and isoform apir and mean values for every numeric metric column of interst.
+        pd.DataFrame, a table with one row per condition and isoform pair and mean values for every numeric metric column of interest.
     """
     #Start with the main-file level metrics, append any residue count columns that were created dynamically during metric computatiion.
     numeric_cols = ["sis", "nucleotide_sis", "trt", "ehbs"] + [
@@ -38,7 +38,7 @@ def aggregate_residue_metrics(file_residue_metrics_df: pd.DataFrame) -> pd.DataF
    Takes a table with one row per residue file with metrics.
 
     Returns:
-        pd.DataFrame: which is a summary indexed by wt/y220c and iso, if input is empty, then empty table returned so the rest of pieepline still runs.
+        pd.DataFrame: which is a summary indexed by wt/y220c and iso, if input is empty, then empty table returned so the rest of pipeline still runs.
     """
     #preserve order.
     if file_residue_metrics_df.empty:
@@ -90,7 +90,7 @@ def aggregate_residue_metrics(file_residue_metrics_df: pd.DataFrame) -> pd.DataF
 def condition_comparison_table(aggregated_df: pd.DataFrame) -> pd.DataFrame:
     """Build a wt/y220c summary table.
 
-    collapes the table into a single row per contribution and extracts SIS, nucSis, TRT, EHBS to compare for both systems.
+    collapses the table into a single row per contribution and extracts SIS, nucSis, TRT, EHBS to compare for both systems.
 
     """
     #Sum across isoforms so each condition is a single total 
@@ -132,7 +132,7 @@ def condition_comparison_table(aggregated_df: pd.DataFrame) -> pd.DataFrame:
 def build_condition_tables(aggregated_df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
     """Split summary into separated wt, y220c tables.
 
-    takes isiform summary created by aggregate_metrics
+    takes isoform summary created by aggregate_metrics
 
     Returns:
         tuple[pd.DataFrame, pd.DataFrame]: two tables for isoforms, one for wt and one for y220c.

@@ -1,5 +1,5 @@
 from __future__ import annotations
-""" This s the module that standardizes how files are discovered, 
+""" This is the module that standardizes how files are discovered, 
     extracts metadata from their names, 
     converts canonical res numbers into iso-specific and reads raw CSVS into pandas.
 """
@@ -52,7 +52,7 @@ def parse_filename_metadata(filepath: str | Path) -> FileMetadata:
     name = path.name
     stem = path.stem
 
-    #match inepdenently, so if parser fails it can send an error message saying what is missing from file name.
+    #match independently, so if parser fails it can send an error message saying what is missing from file name.
     condition_match = re.search(FILENAME_PATTERNS["condition"], stem)
     iso_match = re.search(FILENAME_PATTERNS["isoform"], stem)
     rep_match = re.search(FILENAME_PATTERNS["replicate"], stem)
@@ -97,7 +97,7 @@ def adjust_residue_for_isoform(canonical_residue: str, offset: int) -> str | Non
 
 
 def adjusted_residue_map(canonical_residues: Iterable[str], offset: int) -> dict[str, str]:
-    """Maps canonical residues to iso-adjusted lables for one offest. Residues that are not in that offest are ommited from dictionary.
+    """Maps canonical residues to iso-adjusted labels for one offset. Residues that are not in that offset are ommited from dictionary.
     """
     mapping: dict[str, str] = {}
     for residue in canonical_residues:
@@ -112,7 +112,7 @@ def read_interaction_csv(filepath: str | Path) -> pd.DataFrame:
     
     The function inspects the first non-comment data line to decide if the file is comma-spearated or whitespace.
     
-    Teads the data using the columns defined in config.py
+    Reads the data using the columns defined in config.py
 
     Returns:
         pd.DataFrame.
@@ -130,7 +130,7 @@ def read_interaction_csv(filepath: str | Path) -> pd.DataFrame:
     if first_data_line is None:
         raise ValueError(f"No readable data lines found in file: {path}")
 
-    #Choose the delimiter dynaimcally, some files may be comma separated and others whitespaced.
+    #Choose the delimiter dynamically, some files may be comma separated and others whitespaced.
     sep = "," if "," in first_data_line else r"\s+"
 
     df = pd.read_csv(
@@ -154,7 +154,7 @@ def read_interaction_csv(filepath: str | Path) -> pd.DataFrame:
 
 def list_csv_files(input_path: str | Path, pattern: str = "*_DNA_RES_INTERACT.csv") -> list[Path]:
     """
-    Discover mathcing interaction csv files under input_path recursively.
+    Discover matching interaction csv files under input_path recursively.
     """
     root = Path(input_path)
     return sorted(root.rglob(pattern))

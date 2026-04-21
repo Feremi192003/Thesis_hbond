@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 """This is the core metric computation for a single CSV.
-    It contains the single-pass streaming algoirthm that converts raw rwos into file-level metrics, row annotations and residue-level contribution tables.
+    It contains the single-pass streaming algorithm that converts raw rows into file-level metrics, row annotations and residue-level contribution tables.
 """
 
 from collections import defaultdict
@@ -14,7 +14,7 @@ import pandas as pd
 from .config import NUCLEOTIDE_TARGET_RESIDUES
 from .parsing import FileMetadata, adjusted_residue_map
 
-#Regex to extraxt lables like ARG_248 from cells like ARG_248@NH1
+#Regex to extract lables like ARG_248 from cells like ARG_248@NH1
 PROTEIN_RESIDUE_RE = re.compile(r"\b([A-Z]{3}_\d+)@")
 
 
@@ -34,7 +34,7 @@ FRAC_IDX = 4
 
 
 def _safe_float(value: Any) -> float:
-    """Converts values to floats, return 0.0 if fails. Funciton is mainly used to handle frac, which may contian something other than a number.
+    """Converts values to floats, return 0.0 if fails. Function is mainly used to handle frac, which may contian something other than a number.
     """
    
     try:
@@ -51,11 +51,11 @@ def _extract_protein_residues_from_strings(protein_atom_1: str, protein_atom_2: 
 
     Takes raw string fields from an hbond interaction row, 
 
-    Returns sorted unique res lables found in two proteina tom strings, we are essentially avoiding double-counting of residues.
+    Returns sorted unique res lables found in two protein atom strings, we are essentially avoiding double-counting of residues.
     """
     residues: set[str] = set()
 
-    #search protein fields because either column may contain a residue that means something to the intearction.
+    #search protein fields because either column may contain a residue that means something to the interaction.
     if protein_atom_1:
         residues.update(PROTEIN_RESIDUE_RE.findall(protein_atom_1))
     if protein_atom_2:
@@ -79,11 +79,11 @@ def compute_file_metrics(
         annotated_df: optional row-level annotation table
         residue_df: optional residue-level contribution table
     """
-    #Maps canonical residue lables onto the numbering scheme for the speciifc isofrom its working on by substracting to the appropaite truncation offset.
+    #Maps canonical residue lables onto the numbering scheme for the speciifc isoform its working on by substracting to the appropiate truncation offset.
     residue_mapping = adjusted_residue_map(canonical_target_residues, metadata.offset)
     nucleotide_mapping = adjusted_residue_map(NUCLEOTIDE_TARGET_RESIDUES, metadata.offset)
 
-    #Reverse lookups so adjuseted residue strings in the CSV can be mapped back to canonical lables.
+    #Reverse lookups so adjusted residue strings in the CSV can be mapped back to canonical labels.
     adjusted_to_canonical = {
         adjusted: canonical for canonical, adjusted in residue_mapping.items()
     }
@@ -97,7 +97,7 @@ def compute_file_metrics(
     #Track row-unique counts for canonical target residues.
     residue_counts = {canonical: 0 for canonical in residue_mapping}
 
-    #Resdiue-level accumulators used only when residue metrics are enabled.
+    #Residue-level accumulators used only when residue metrics are enabled.
     occupancy_by_residue: defaultdict[str, float] = defaultdict(float)
     dna_contacts_by_residue: defaultdict[str, set[str]] = defaultdict(set)
     sis_contribution_by_residue: defaultdict[str, int] = defaultdict(int)
@@ -134,7 +134,7 @@ def compute_file_metrics(
         row_has_nucleotide_match = len(matched_nucleotide_adjusted) > 0
 
 
-        #SIS Counts if a row has a target residue, residue_counts tracks which canonical tragets contributed to that file-level value.
+        #SIS Counts if a row has a target residue, residue_counts tracks which canonical targets contributed to that file-level value.
         if row_has_match:
             sis += 1
             for adjusted_residue in matched_adjusted:
@@ -161,7 +161,7 @@ def compute_file_metrics(
                     nucleotide_sis_contribution_by_residue[residue_label] += 1
 
         if include_row_annotations:
-            #Save explnanation of what mathced in this row so user can check after.
+            #Save explanation of what matched in this row so user can check after.
             annotated_rows.append(
                 {
                     "filename": metadata.filename,
@@ -187,7 +187,7 @@ def compute_file_metrics(
         "trt": trt,
     }
 
-    #add one count column per residue so the plitting layer can build residue specific bar charts automatically.
+    #add one count column per residue so the layer can build residue specific bar charts automatically.
     for canonical_residue in canonical_target_residues:
         result[f"count_{canonical_residue}"] = residue_counts.get(canonical_residue, 0)
 
