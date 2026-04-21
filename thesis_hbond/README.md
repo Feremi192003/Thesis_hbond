@@ -1,6 +1,6 @@
 # HBond Python Pipeline
 
-This is a cleaned Python rewrite of your Sheets-based hydrogen-bond workflow.
+This is a cleaned Python rewrite of the Sheets-based hydrogen-bond workflow.
 
 ## What it computes
 
